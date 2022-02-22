@@ -1,15 +1,32 @@
-import React from 'react';
-import TopBar from './TopBar';
-
+import React, {useState} from 'react';
 import { TOKEN_KEY } from "../constants";
+import TopBar from './TopBar';
+import Main from "./Main";
+
+import "../styles/App.css";
 
 function App() {
-  console.dir(useState());
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem(TOKEN_KEY) ? ture : false);
-    
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem(TOKEN_KEY) ? true : false
+  );
+
+  const logout = () => {
+    console.log("log out");
+    localStorage.removeItem(TOKEN_KEY);
+    setIsLoggedIn(false);
+  };
+  
+  const loggedIn = (token) => {
+    if (token) {
+      localStorage.setItem(TOKEN_KEY, token);
+      setIsLoggedIn(true);
+    }
+  };
+
   return (
     <div className="App">
-      <TopBar/>
+      <TopBar isLoggedIn = {isLoggedIn} handleLogout={logout} />
+      <Main isLoggedIn={isLoggedIn} handleLoggedIn={loggedIn} />
     </div>
   );
 }
