@@ -4,6 +4,7 @@ import axios from "axios";
 
 import SearchBar from "./SearchBar";
 import PhotoGallery from "./PhotoGallery";
+import CreatePostButton from "./CreatePostButton";
 import { SEARCH_KEY, BASE_URL, TOKEN_KEY } from "../constants";
 
 const { TabPane } = Tabs;
@@ -16,12 +17,13 @@ function Home(props) {
     keyword: ""
   });
 
+  const handleSearch = (option) => {
+    const { type, keyword } = option;
+    setSearchOption({ type: type, keyword: keyword });
+  };
+
   useEffect(() => {
-    console.log("fetch data");
-    // do search the first time -> didMount -> search: {type: all, value: ''}
-    // after the first search -> didUpdate -> search: {type: keyword / user, value: value}
     const { type, keyword } = searchOption;
-    console.log("serach option -> ", type, keyword);
     fetchPost(searchOption);
   }, [searchOption]);
 
@@ -57,23 +59,19 @@ function Home(props) {
       });
   };
 
+  // posts is empty / not exised
+  // type === image --> render <PhotoGallery images/>
+  // type === video --> video <video/>
   const renderPosts = (type) => {
-    // posts is empty / not exised
-    // type === image --> render <PhotoGallery images/>
-    // type === video --> video <video/>
-    if (!posts && posts.length == 0) {
-      return <div>No data</div>
+    if (!posts || posts.length === 0) {
+      return <div>No data!</div>;
     }
-
-    // For array
-    // Remove --> filter
-    // map --> visit
-    // ... --> add
     if (type === "image") {
       const imageArr = posts
         .filter((item) => item.type === "image")
         .map((image) => {
           return {
+            postId: image.id,
             src: image.url,
             user: image.user,
             caption: image.message,
@@ -82,10 +80,9 @@ function Home(props) {
             thumbnailHeight: 200
           };
         });
+
       return <PhotoGallery images={imageArr} />;
-    } 
-    
-    else if (type === "video") {
+    } else if (type === "video") {
       return (
         <Row gutter={32}>
           {posts
@@ -102,12 +99,24 @@ function Home(props) {
       );
     }
   };
+  // For array
+  // Remove --> filter
+  // map --> visit
+  // ... --> add
 
-  const operations = <Button>Upload</Button>;
-  
+  const showPost = (type) => {
+    console.log("type -> ", type);
+    setActiveTab(type);
+
+    setTimeout(() => {
+      setSearchOption({ type: SEARCH_KEY.all, keyword: "" });
+    }, 3000);
+  };
+
+  const operations = <CreatePostButton onShowPost={showPost} />;
   return (
     <div className="home">
-      <SearchBar />
+      <SearchBar handleSearch={handleSearch} />
       <div className="display">
         <Tabs
           onChange={(key) => setActiveTab(key)}
@@ -128,3 +137,8 @@ function Home(props) {
 }
 
 export default Home;
+
+
+
+
+

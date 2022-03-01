@@ -32,9 +32,3 @@ function Main(props) {
 }
 
 export default Main;
-
-
-// router 
-//  /login --> login(component)
-//  /register --> Register
-//  /home --> home

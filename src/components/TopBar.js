@@ -18,6 +18,5 @@ function TopBar(props) {
 
 export default TopBar;
 
-
 // Or onClick={ handleLogout }
 // Cannot onClick={ handleLogout() }

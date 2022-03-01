@@ -46,6 +46,7 @@ function Register(props) {
     axios(opt)
       .then((response) => {
         console.log(response);
+        // case1: registered success
         if (response.status === 200) {
           message.success("Registration succeed!");
           props.history.push("/login");
@@ -53,7 +54,8 @@ function Register(props) {
       })
       .catch((error) => {
         console.log("register failed: ", error.message);
-        message.info("Registration failed!");
+        message.success("Registration failed!");
+        // throw new Error('Signup Failed!')
       });
   };
 
