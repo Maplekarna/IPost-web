@@ -1,0 +1,58 @@
+1. What's React?
+	- UI
+	- Librart
+
+2 How to use?
+ 	- react core components
+ 	- react-dom Virtual Dom <-> Real Dom
+ 	- bable complie 
+
+3. React App feature
+	- component(s) <-- element(s)
+
+	                   App
+              /        /   \   \
+	  component1   c2    c3    c4
+         /  / \  \
+   element1 e2 e3 e4 .............
+
+4. How to create react Element
+	- React.creatElement          React.render(element, Position want to be loaded)
+	- JSX:  write html in js(use tag).
+		<div> { } </div>:            // insert
+			- number, str, array, fn(not if or else)
+			- cannot add: object, boolean 
+
+5. How to create Component
+	- Class
+		- state
+		- life cycle func
+	- Function
+		- props (arguments)
+		- state
+
+6. Class-based component	
+	- props ----> component inner date
+		- read-only
+	
+	- state ---> component outer date 
+		- define
+			- constructor
+			- state = {}
+
+		- use
+			- read
+			- update
+				- this.setState()
+
+7. Data communication
+	- parent --> child
+		- Parent, <Child key = val> 	// define
+		- Child, this.props.key			// read
+
+	- child --> parent    // want to change parent's data when inside child.
+		- Parent, define callback Function
+		- Parent, <Child, key = cbfnc>
+
+	- sibling <-> sibling
+		-- LCA: parent -> child + child -> parent

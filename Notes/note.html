@@ -1,0 +1,126 @@
+<body>
+    <div id = 'app'></div>
+
+    <script>
+        class Parent extends React.Component {
+            state = {
+                number: 100,
+                step : 2
+            }
+
+            fn = (data) => {
+                this.setState(preState => ({number : preState.number + data}))
+            }
+
+            render() {
+                const {number, step } = this.state; //deconstruct
+
+                // <Child num={number} handldeFn()/>  send to line30
+                // handleFn = {this.fn} --> send the address of fn to child, so the child can find and access fn.
+                return (
+                    <div>
+                        <h2> Parent Component</h2>
+                        <Child num={number} handleFn = {this.fn} stepFromP ={step}/> 
+                    
+                    </div>
+                )
+            }
+        }
+        class Child extends React.Component {
+            render() {
+                const {num, handleFn, stepFromP} = this.props; // recieve from line22, read
+                return (
+                    <div>
+                        <h3> Child Component</h3>
+                        <button onClick = {
+                            () => {
+                                handleFn(20)
+                            }
+                        }></button>
+                        <GrandChild stepFromParent = {stepFromP}/>
+                    </div>
+                )
+            }
+        }
+
+        class GrandChild extends React.Component {
+            render() {
+                return <div>
+                    <p> number = {this.props.stepFromParent}</p>
+                    </div>
+                
+            }
+
+        }
+    </script>
+
+    <script>
+        function App(props) {
+            // use "props" directly.
+            console.log(props);
+            return <h2>Hello React</h2> // must return jsx language.
+        }
+
+        class Haha extends ReactDom.Component {
+            // must have render()
+            constructor(props) {
+                super();
+                // use "this" to use "props"
+                console.log(this.props);
+                
+                // how to use state
+                this.state = {
+                    number : 20,
+                    isOk : false
+                }
+            }
+
+            state = {
+                number : 30
+            }
+
+            render() { 
+                const { number } = this.props;
+                return <div>
+                        <h3> Haha!!!</h3>
+                        <button onclick = {
+                            () =>{
+                                //跟之前state无关，直接object改
+                                this.setState({isOk : true})
+                                
+                                //不然，回调函数
+                                this.setState( pre => {
+                                        return {
+                                            number: pre.number + 1
+                                        }
+                                    } 
+                                )
+                            }
+                        }> </button>
+                    </div>
+                
+            }
+        }
+
+        // 挂载到Dom去， 不然显示不出来
+        // ReactDom.render(element, loaded point)
+        ReactDom.render(
+            // <App/>, // <App/> == new App() 
+            // "person = {{name: "sn", age: 10}}" is the argument (props), send it as whole parameter.
+            <div className="container">
+                <App person = {{name: "sn", age: 10}}/>  
+                <Haha/>    
+            </div>,
+
+            document.getElementById('app') // 真实dom的挂载点
+        )
+
+        function fn(a, b) {
+            let c = a + b;
+            let d = 10;
+            console.log(c + d);
+        }
+        fn(2, 5);
+
+    </script>
+</body>

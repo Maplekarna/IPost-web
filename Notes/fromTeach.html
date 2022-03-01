@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <h1>React Review</h1>
+
+    <div id="app"></div>
+
+    <script>
+        // const fn = function() {
+        //
+        // }
+        //
+        // function fn() {
+        //
+        // }
+    </script>
+    <script type="text/babel">
+        class Parent extends React.Component {
+            state = {
+                number: 100,
+                step: 2
+            };
+            // constructor() {
+            //     super();
+            //     this.state = {
+            //         number: 100
+            //     }
+            // }
+
+            fn = (data) => {
+                console.log('fn -> ', data);
+                this.setState( preState => {
+                    return { number: preState.number + data }
+                })
+            }
+
+            render() {
+                const { number, step } = this.state;
+                return (
+                    <div>
+                        <h2>Parent Component</h2>
+                        <p>My number is: { number }</p>
+                        <hr/>
+                        <Child num={ number }
+                               handleFn={ this.fn }
+                               stepFromP={step}
+                        />
+                    </div>
+                )
+            }
+        }
+
+        class Child extends React.Component {
+
+            render() {
+                const { num, handleFn, stepFromP } = this.props;
+
+                return (
+                    <div>
+                        <h3>Child Component</h3>
+                        <p>The number from Parent: { num }</p>
+                        <button onClick={
+                            () => {
+                                // this.props.num = this.props.num + 1;
+                                console.log(handleFn);
+                                handleFn(20);
+                            }
+                        }>click me</button>
+                        <hr/>
+                        <GrandChild stepFromParent={stepFromP}/>
+                    </div>
+                )
+            }
+        }
+
+        class GrandChild extends React.Component {
+            render() {
+                return <div>
+                    <h5>GrandChild</h5>
+                    <p>Number is: { this.props.stepFromParent } </p>
+                </div>
+            }
+        }
+
+
+        ReactDOM.render(
+            <Parent />,
+            document.getElementById('app')
+        )
+    </script>
+
+    <script type="text/babel">
+        // function App(props) {
+        //     console.log(props);
+        //
+        //     return <div>
+        //         <h3>Hello {props.person.name}!</h3>
+        //     </div>
+        // }
+        //
+        // class Haha extends React.Component {
+        //     // constructor(props) {
+        //     //     super();
+        //     //     console.log(props);
+        //     //     this.state = {
+        //     //         number: 20
+        //     //     }
+        //     // }
+        //     state = {
+        //         number: 30,
+        //         isOk: false
+        //     };
+        //
+        //     render() {
+        //         console.log(this.props);
+        //         const { number } = this.state;
+        //
+        //         return <div>
+        //             <h3>hahaha!!!</h3>
+        //             <h4>hehe~~~</h4>
+        //             <h4>my number is: { number }</h4>
+        //             <button onClick={
+        //                 () => {
+        //                     // this.setState({ isOk: true })
+        //                     this.setState( pre => {
+        //                         console.log('preState -> ',pre);
+        //                         return {
+        //                             number: pre.number + 1
+        //                         }
+        //                     })
+        //                 }
+        //             }>click me</button>
+        //         </div>
+        //
+        //     }
+        // }
+        //
+        // ReactDOM.render(
+        //     <div className="container">
+        //         <App person={{ name: "snoopy", age: 10 }} num={100} />
+        //         <hr/>
+        //         <Haha data={100}/>
+        //     </div>,
+        //     document.getElementById('app')
+        // )
+
+        // function fn(a, b) {
+        //     let c = a + b;
+        //     let d = 10;
+        //     console.log(c + d);
+        // }
+        //
+        // fn(2, 5);
+    </script>
+
+    <script type="text/babel">
+        // const ele = React.createElement('p', {
+        //     className: 'box',
+        //     key: 2
+        // }, 'Hello React');
+        //
+        // const oBtn = React.createElement('button', {
+        //     className: 'btn',
+        //     key: 1,
+        //     onClick: () => { console.log('clicked!'); }
+        // }, "click me");
+        //
+        // const ele2 = React.createElement('div', {
+        //     className: 'wrapper'
+        // }, [ele, oBtn] );
+
+        // const ele2 = <div className="wrapper">
+        //     <p className="box">Hello React!</p>
+        //     <button onClick={ () => console.log('clicked! ')}>click me!</button>
+        // </div>
+        // const a = { name: "Snoopy", age: 10 };
+        // const a = [<p key='1'>1</p>, <p key='2'>2</p>, <p key='3'>3</p>];
+        // const a = true;
+
+        // const ele2 = <div> { JSON.stringify(a) } </div>
+        // const ele2 = <div> { a.name }: { a. age } </div>
+        // const ele2 = <div> { a } </div>
+        // const ele2 = <div> { 2 > 1 ? 'dog' : 'cat' } </div>
+        //
+        // ReactDOM.render(
+        //     ele2,
+        //     document.getElementById('app')
+        // )
+    </script>
+</body>
+</html>

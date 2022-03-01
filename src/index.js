@@ -9,7 +9,7 @@ import { BrowserRouter } from "react-router-dom";
 // Parameters of render, render is a method.
 ReactDOM.render(
     <BrowserRouter>
-      <App />
+      <App /> 
     </BrowserRouter>,
   document.getElementById('root')  // Control DOM
 );
